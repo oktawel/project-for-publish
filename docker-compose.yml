@@ -14,7 +14,9 @@ services:
       - app-network
 
   nginx:
-    build: ./nginx
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
     container_name: payment-nginx
     ports:
       - "80:80"
