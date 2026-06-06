@@ -144,7 +144,7 @@ body {
 
 .product-desc {
   font-size: 14px;
-  color: #636e72;
+  color: #4a5568;
   margin-bottom: 15px;
   flex: 1;
 }
@@ -189,7 +189,7 @@ body {
 .cart-empty {
   text-align: center;
   padding: 60px 20px;
-  color: #95a5a6;
+  color: #6b7280;
 }
 
 .cart-empty-icon {
@@ -352,13 +352,13 @@ body {
 
 .order-id {
   font-size: 14px;
-  color: #95a5a6;
+  color: #6b7280;
   font-family: monospace;
 }
 
 .order-date {
   font-size: 13px;
-  color: #95a5a6;
+  color: #6b7280;
 }
 
 .status-badge {
@@ -510,7 +510,7 @@ body {
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
-  color: #747d8c;
+  color: #4b5563;
   transition: all 0.3s;
 }
 

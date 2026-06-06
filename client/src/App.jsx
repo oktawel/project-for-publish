@@ -339,11 +339,13 @@ function App() {
           </button>
         </nav>
       </header>
-
-      {currentPage === 'shop' && renderShop()}
-      {currentPage === 'cart' && renderCart()}
-      {currentPage === 'orders' && renderOrders()}
-
+     
+      <main>
+        {currentPage === 'shop' && renderShop()}
+        {currentPage === 'cart' && renderCart()}
+        {currentPage === 'orders' && renderOrders()}
+      </main>
+      
       {notification && <div className="notification">{notification}</div>}
     </div>
   );
