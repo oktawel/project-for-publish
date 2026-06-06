@@ -170,7 +170,12 @@ function App() {
 
   const renderShop = () => (
     <div className="container">
-      <h1 className="page-title">🛍️ Каталог электроники <span style={{ fontSize: '18px', fontWeight: 'normal' }}>(Вы вошли как: <b>{currentUser}</b>)</span></h1>
+      <h1 className="page-title">
+        <svg className="icon icon-lg" viewBox="0 0 24 24">
+          <path d="M4 6h16v2H4zm2 4h12v2H6zm2 4h8v2H8z" />
+        </svg>
+         Каталог электроники <span style={{ fontSize: '18px', fontWeight: 'normal' }}>(Вы вошли как: <b>{currentUser}</b>)</span>
+      </h1>
       <div className="products-grid">
         {PRODUCTS.map(product => (
           <div key={product.id} className="product-card">
@@ -189,7 +194,12 @@ function App() {
 
   const renderCart = () => (
     <div className="container">
-      <h1 className="page-title">🛒 Корзина ({currentUser})</h1>
+      <h1 className="page-title">
+        <svg className="icon icon-lg" viewBox="0 0 24 24">
+          <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
+        </svg>
+        Корзина ({currentUser})
+      </h1>
       <div className="cart-container">
         {cart.length === 0 ? (
           <div className="cart-empty">
@@ -228,7 +238,13 @@ function App() {
 
   const renderOrders = () => (
     <div className="container">
-      <h1 className="page-title">📦 Мои заказы ({currentUser})</h1>
+      <h1 className="page-title">
+        <svg className="icon icon-lg" viewBox="0 0 24 24">
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z" />
+          <path d="M7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z" />
+        </svg>
+        Мои заказы ({currentUser})
+      </h1>
       {orders.length === 0 ? (
         <div className="cart-container">
           <div className="cart-empty">
@@ -295,6 +311,15 @@ function App() {
           ))}
         </div>
       )}
+
+      <footer className="footer">
+        <div className="footer-content">
+          <div className="footer-logo">⚡ ElectroShop</div>
+          <div className="footer-text">
+            © 2026 Все права защищены.
+          </div>
+        </div>
+      </footer>
     </div>
   );
 
@@ -302,7 +327,12 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <div className="logo">⚡ ElectroShop</div>
+        <div className="logo">
+          <svg className="icon icon-lg" viewBox="0 0 24 24">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+          </svg>
+          ElectroShop
+        </div>
         <nav className="nav">
           <div className="user-switcher">
             <button
@@ -319,12 +349,29 @@ function App() {
             </button>
           </div>
 
-          <button className={`nav-btn ${currentPage === 'shop' ? 'active' : ''}`} onClick={() => setCurrentPage('shop')}>🛍️ Каталог</button>
-          <button className={`nav-btn ${currentPage === 'orders' ? 'active' : ''}`} onClick={() => setCurrentPage('orders')}>📦 Заказы</button>
+          <button className={`nav-btn ${currentPage === 'shop' ? 'active' : ''}`} onClick={() => setCurrentPage('shop')}>
+            <svg className="icon" viewBox="0 0 24 24">
+              <path d="M4 6h16v2H4zm2 4h12v2H6zm2 4h8v2H8z" />
+            </svg>
+            Каталог
+          </button>
+
+          <button className={`nav-btn ${currentPage === 'orders' ? 'active' : ''}`} onClick={() => setCurrentPage('orders')}>
+            <svg className="icon" viewBox="0 0 24 24">
+              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z" />
+              <path d="M7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z" />
+            </svg>
+            Заказы
+          </button>
+
           <button className={`nav-btn ${currentPage === 'cart' ? 'active' : ''}`} onClick={() => setCurrentPage('cart')}>
-            🛒 Корзина
+            <svg className="icon" viewBox="0 0 24 24">
+              <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
+            </svg>
+            Корзина
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </button>
+
         </nav>
       </header>
      
