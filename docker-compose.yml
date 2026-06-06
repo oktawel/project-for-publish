@@ -6,7 +6,7 @@ services:
     container_name: payment-backend
     environment:
       - NODE_ENV=production
-      - FRONTEND_URL=https://YOUR_IP.sslip.io # Подставим на сервере
+      - FRONTEND_URL=https://siteforlabs.ru # Подставим на сервере
     expose:
       - "5000"
     restart: always
