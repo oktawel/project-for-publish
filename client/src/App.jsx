@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = '';
 
 const PRODUCTS = [
   { id: 1, name: 'Смартфон Galaxy Ultra', price: 89990, image: '📱', desc: 'Флагманский смартфон' },
