@@ -1,19 +1,17 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
-import {
-  LightningIcon,
-  CatalogIcon,
-  OrdersIcon,
-  CartIcon,
-  UserIcon,
-  ProductIcon,
-  EmptyCartIcon,
-  EmptyOrdersIcon
-} from './icons';
-
 
 const API_URL = '';
+
+// Импортируем SVG иконки
+const LightningIcon = () => <img src="/icons/lightning.svg" alt="" className="icon icon-lg" />;
+const CatalogIcon = () => <img src="/icons/catalog.svg" alt="" className="icon" />;
+const OrdersIcon = () => <img src="/icons/orders.svg" alt="" className="icon" />;
+const CartIcon = () => <img src="/icons/cart.svg" alt="" className="icon" />;
+const UserIcon = () => <img src="/icons/user.svg" alt="" className="icon" />;
+const EmptyCartIcon = () => <img src="/icons/empty-cart.svg" alt="" className="cart-empty-icon" />;
+const EmptyOrdersIcon = () => <img src="/icons/empty-orders.svg" alt="" className="cart-empty-icon" />;
 
 const PRODUCTS = [
   { id: 1, name: 'Смартфон Galaxy Ultra', price: 89990, image: '📱', desc: 'Флагманский смартфон' },
@@ -367,14 +365,14 @@ function App() {
         {currentPage === 'orders' && renderOrders()}
       </main>
 
-      <footer className="footer">
+      {/* <footer className="footer">
         <div className="footer-content">
           <div className="footer-logo">⚡ ElectroShop</div>
           <div className="footer-text">
             © 2026 Все права защищены.
           </div>
         </div>
-      </footer>
+      </footer> */}
 
       {notification && <div className="notification">{notification}</div>}
     </div>
