@@ -291,18 +291,6 @@ function App() {
                   </button>
                 </div>
               )}
-
-              {order.status === 'canceled' && (
-                <div style={{ marginTop: '15px', textAlign: 'right' }}>
-                  <button
-                    className="btn-retry"
-                    onClick={() => handleRetryPayment(order.id)}
-                    disabled={loading}
-                  >
-                    💳 Повторить оплату
-                  </button>
-                </div>
-              )}
             </div>
           ))}
         </div>
@@ -345,7 +333,7 @@ function App() {
         {currentPage === 'cart' && renderCart()}
         {currentPage === 'orders' && renderOrders()}
       </main>
-      
+
       {notification && <div className="notification">{notification}</div>}
     </div>
   );
