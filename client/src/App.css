@@ -8,6 +8,7 @@
   --bg-primary: #0a0a0f;
   --bg-secondary: #1a1a2e;
   --bg-card: rgba(30, 30, 46, 0.6);
+  --bg-content: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   --accent: #6366f1;
   --accent-hover: #818cf8;
   --text-primary: #f1f5f9;
@@ -35,6 +36,8 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f3460 100%);
+  background-attachment: fixed;
 }
 
 /* SVG Icons */
@@ -190,6 +193,10 @@ body {
   margin: 40px auto;
   padding: 0 40px;
   flex: 1;
+  background: var(--bg-content);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
 }
 
 .page-title {
