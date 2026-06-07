@@ -4,15 +4,6 @@ import './App.css';
 
 const API_URL = '';
 
-// Импортируем SVG иконки
-const LightningIcon = () => <img src="/icons/lightning.svg" alt="" className="icon icon-lg" />;
-const CatalogIcon = () => <img src="/icons/catalog.svg" alt="" className="icon" />;
-const OrdersIcon = () => <img src="/icons/orders.svg" alt="" className="icon" />;
-const CartIcon = () => <img src="/icons/cart.svg" alt="" className="icon" />;
-const UserIcon = () => <img src="/icons/user.svg" alt="" className="icon" />;
-const EmptyCartIcon = () => <img src="/icons/empty-cart.svg" alt="" className="cart-empty-icon" />;
-const EmptyOrdersIcon = () => <img src="/icons/empty-orders.svg" alt="" className="cart-empty-icon" />;
-
 const PRODUCTS = [
   { id: 1, name: 'Смартфон Galaxy Ultra', price: 89990, image: '📱', desc: 'Флагманский смартфон' },
   { id: 2, name: 'Ноутбук ProBook 15', price: 129990, image: '💻', desc: 'Мощный ноутбук' },
@@ -32,15 +23,12 @@ function App() {
 
   const cart = carts[currentUser];
 
-  // 1. Проверка URL при первой загрузке
-  // Проверка URL при загрузке - сразу переходим на страницу заказов
-  // Проверка URL при загрузке - сразу переходим на страницу заказов
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const orderId = params.get('orderId');
     if (orderId) {
       setCurrentOrderId(orderId);
-      setCurrentPage('orders'); // Сразу переходим на заказы
+      setCurrentPage('orders');
       loadOrders();
       window.history.replaceState({}, '', '/');
       showNotification('🔄 Проверка статуса платежа...');
@@ -49,22 +37,16 @@ function App() {
     }
   }, []);
 
-  // 2. 🔥 ИСПРАВЛЕНИЕ: Мгновенная загрузка заказов при смене пользователя
   useEffect(() => {
-    // Сбрасываем старые заказы, чтобы не показывать данные прошлого пользователя
     setOrders([]);
-    // Сразу загружаем заказы нового пользователя
     loadOrders();
   }, [currentUser]);
 
-  // 3. Автоматическая проверка статусов на странице заказов (polling)
   useEffect(() => {
     if (currentPage !== 'orders') return;
-
     const interval = setInterval(() => {
       loadOrders();
     }, 3000);
-
     return () => clearInterval(interval);
   }, [currentPage, currentUser]);
 
@@ -153,20 +135,6 @@ function App() {
     }
   };
 
-  const checkStatus = async (orderId) => {
-    try {
-      const response = await axios.get(`${API_URL}/api/order-status/${orderId}`);
-      setOrderStatus(response.data.status);
-      if (response.data.status === 'pending') {
-        setTimeout(() => checkStatus(orderId), 3000);
-      } else {
-        loadOrders();
-      }
-    } catch (error) {
-      console.error('Ошибка проверки статуса:', error);
-    }
-  };
-
   const getStatusBadge = (status) => {
     const map = {
       pending: { class: 'status-pending', text: '⏳ Ожидает оплаты' },
@@ -179,10 +147,7 @@ function App() {
 
   const renderShop = () => (
     <div className="container">
-      <h1 className="page-title">
-        <ProductIcon />
-        Каталог электроники <span style={{ fontSize: '18px', fontWeight: 'normal' }}>(Вы вошли как: <b>{currentUser}</b>)</span>
-      </h1>
+      <h1 className="page-title">🛍️ Каталог электроники <span className="page-subtitle">(Вы вошли как: <b>{currentUser}</b>)</span></h1>
       <div className="products-grid">
         {PRODUCTS.map(product => (
           <div key={product.id} className="product-card">
@@ -201,14 +166,11 @@ function App() {
 
   const renderCart = () => (
     <div className="container">
-      <h1 className="page-title">
-        <CartIcon />
-        Корзина ({currentUser})
-      </h1>
+      <h1 className="page-title">🛒 Корзина ({currentUser})</h1>
       <div className="cart-container">
         {cart.length === 0 ? (
           <div className="cart-empty">
-            <EmptyCartIcon />
+            <div className="cart-empty-icon">🛒</div>
             <h2>Корзина пуста</h2>
             <button className="btn-home" onClick={() => setCurrentPage('shop')}>Перейти в магазин</button>
           </div>
@@ -243,14 +205,11 @@ function App() {
 
   const renderOrders = () => (
     <div className="container">
-      <h1 className="page-title">
-        <OrdersIcon />
-        Мои заказы ({currentUser})
-      </h1>
+      <h1 className="page-title">📦 Мои заказы ({currentUser})</h1>
       {orders.length === 0 ? (
         <div className="cart-container">
           <div className="cart-empty">
-            <EmptyOrdersIcon />
+            <div className="cart-empty-icon">📦</div>
             <h2>Заказов пока нет</h2>
           </div>
         </div>
@@ -278,8 +237,9 @@ function App() {
                 <span>{order.totalAmount.toLocaleString('ru-RU')} ₽</span>
               </div>
 
-              {(order.status === 'pending') && (
-                <div style={{ marginTop: '15px', textAlign: 'right', display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+              {/* Кнопки ТОЛЬКО для pending статуса */}
+              {order.status === 'pending' && (
+                <div className="order-actions">
                   <button
                     className="btn-retry"
                     onClick={() => handleRetryPayment(order.id)}
@@ -313,66 +273,52 @@ function App() {
           ))}
         </div>
       )}
-
     </div>
   );
-
 
   return (
     <div className="app">
       <header className="header">
-        <div className="logo">
-          <LightningIcon />
-          ElectroShop
-        </div>
+        <div className="logo">⚡ ElectroShop</div>
         <nav className="nav">
           <div className="user-switcher">
             <button
               className={`user-btn ${currentUser === 'user1' ? 'active' : ''}`}
               onClick={() => setCurrentUser('user1')}
             >
-              <UserIcon />
-              User 1
+              👤 User 1
             </button>
             <button
               className={`user-btn ${currentUser === 'user2' ? 'active' : ''}`}
               onClick={() => setCurrentUser('user2')}
             >
-              <UserIcon />
-              User 2
+              👤 User 2
             </button>
           </div>
 
-          <button className={`nav-btn ${currentPage === 'shop' ? 'active' : ''}`} onClick={() => setCurrentPage('shop')}>
-            <CatalogIcon />
-            Каталог
-          </button>
-          <button className={`nav-btn ${currentPage === 'orders' ? 'active' : ''}`} onClick={() => setCurrentPage('orders')}>
-            <OrdersIcon />
-            Заказы
-          </button>
+          <button className={`nav-btn ${currentPage === 'shop' ? 'active' : ''}`} onClick={() => setCurrentPage('shop')}>🛍️ Каталог</button>
+          <button className={`nav-btn ${currentPage === 'orders' ? 'active' : ''}`} onClick={() => setCurrentPage('orders')}>📦 Заказы</button>
           <button className={`nav-btn ${currentPage === 'cart' ? 'active' : ''}`} onClick={() => setCurrentPage('cart')}>
-            <CartIcon />
-            Корзина
+            🛒 Корзина
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </button>
         </nav>
       </header>
-     
-      <main>
+
+      <main className="main-content">
         {currentPage === 'shop' && renderShop()}
         {currentPage === 'cart' && renderCart()}
         {currentPage === 'orders' && renderOrders()}
       </main>
 
-      {/* <footer className="footer">
+      <footer className="footer">
         <div className="footer-content">
           <div className="footer-logo">⚡ ElectroShop</div>
           <div className="footer-text">
-            © 2026 Все права защищены.
+            © 2026 Все права защищены. Лабораторная работа по веб-программированию.
           </div>
         </div>
-      </footer> */}
+      </footer>
 
       {notification && <div className="notification">{notification}</div>}
     </div>
