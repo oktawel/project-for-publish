@@ -26,15 +26,21 @@ function App() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const orderId = params.get('orderId');
-    if (orderId) {
-      setCurrentOrderId(orderId);
-      setCurrentPage('orders');
-      loadOrders();
-      window.history.replaceState({}, '', '/');
-      showNotification('🔄 Проверка статуса платежа...');
-    } else {
-      loadOrders();
-    }
+
+    // Задержка 100мс, чтобы страница сначала отрисовалась
+    const timer = setTimeout(() => {
+      if (orderId) {
+        setCurrentOrderId(orderId);
+        setCurrentPage('orders');
+        loadOrders();
+        window.history.replaceState({}, '', '/');
+        showNotification('🔄 Проверка статуса платежа...');
+      } else {
+        loadOrders();
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
